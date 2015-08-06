@@ -50,7 +50,7 @@ time_format = args.time_format
 logging.debug('Time logging format will be: "%s".' % time_format)
 log_file_path = os.path.expanduser(args.log_file)
 logging.debug('Log will be: "%s".' % log_file_path)
-f = open(log_file_path,'w+')
+f = open(log_file_path,'a+')
 
 logging.info('Launching lock time logger...')
 
@@ -76,6 +76,11 @@ def receiver(*args,**kwargs):
     logging.info('Screen unlock.')
     _log('unlock')
 
+def exit():
+  _log('stop')
+  f.close()
+  logging.info('... done!')
+
 atexit.register(_log, message='stop')
 
 _log('start')
@@ -91,6 +96,7 @@ logging.debug('Setting up main loop ...')
 mainloop = gobject.MainLoop()
 logging.debug('Running main loop ...')
 mainloop.run()
-f.close()
-logging.info('... done!')
+
+#Atexit will remove.
+
 
