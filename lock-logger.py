@@ -76,12 +76,12 @@ def receiver(*args,**kwargs):
     logging.info('Screen unlock.')
     _log('unlock')
 
-def exit():
+def shutdown_hook():
   _log('stop')
   f.close()
   logging.info('... done!')
 
-atexit.register(_log, message='stop')
+atexit.register(shutdown_hook)
 
 _log('start')
 logging.debug('Setting up signal receiver ...')
@@ -97,6 +97,6 @@ mainloop = gobject.MainLoop()
 logging.debug('Running main loop ...')
 mainloop.run()
 
-#Atexit will remove.
+#Atexit will log exit and close file.
 
 
